@@ -3,28 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Doozy.Runtime.UIManager.Animators;
 
 
 public class GameManager : MonoBehaviour{
+    private string highscoreKey = "highscore";
+    public static GameManager get;
+
+    [Header("Parameter HUD")]
     public int health = 3;
     public int score = 0;
     public int highscore = 0;
-    private string highscoreKey = "highscore";
-    public static GameManager get;
+
     [Header("Pause Attributes")]
     public TextMeshProUGUI pauseButtonTMP;
     public bool isPause = false;
+    public UIContainerUIAnimator pausePanelAnimator;
+    // public Sprite playIcon;
+    public Sprite pauseIcon;
+    [SerializeField] TextMeshProUGUI pauseScoreTMP;
+    [SerializeField] TextMeshProUGUI pauseHSTMP;
 
     [Header("HUD Attributes")]
     [SerializeField] TextMeshProUGUI healthText;
     [SerializeField] TextMeshProUGUI scoreText;
+    
     [Header("Game Over Attributes")]
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] TextMeshProUGUI gameOverScoreTMP;
     [SerializeField] TextMeshProUGUI gameOverHSTMP;
     [SerializeField] AudioSource gameOverAudioSource;
+    
     [Header("Main Menu Attributes")]
     [SerializeField] GameObject mainMenuPanel;
+    public UIContainerUIAnimator mainMenuPanelAnimator;
     // [SerializeField] TextMeshProUGUI gameOverScoreTMP;
     [SerializeField] TextMeshProUGUI mainMenuHSTMP;
     // [SerializeField] AudioSource gameOverAudioSource;
@@ -78,7 +90,7 @@ public class GameManager : MonoBehaviour{
     }
 
     public void StartGame(){
-        mainMenuPanel.SetActive(false);
+        // mainMenuPanel.SetActive(false);
         Time.timeScale = 1;
         health = 3;
         healthText.text = "Health : 3";
@@ -102,12 +114,18 @@ public class GameManager : MonoBehaviour{
     }
     public void pauseResumeGame(){
         isPause = !isPause;
+        pauseScoreTMP.text = "Score : " + score;
+        pauseHSTMP.text = "Highscore : " + highscore;
         if(isPause){
             Time.timeScale = 0;
             pauseButtonTMP.text = "Resume";
+            pausePanelAnimator.Show();
+            // pausePanelAnimator.gameObject.SetActive(true);
+
         }else{
             Time.timeScale = 1;
             pauseButtonTMP.text = "Pause";
+            pausePanelAnimator.Hide();
         }
     }
     public void exitGame(){
