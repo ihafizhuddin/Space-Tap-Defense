@@ -70,6 +70,8 @@ public class GameManager : MonoBehaviour{
     public void zombieAttack(){
         //decrease health
         health--;
+        // if(health>0)
+        AudioManager.ins.playAlienHitSFX();
         if(health <= 0){
             healthText.text = "Game Over";
             GameOver();
@@ -112,11 +114,12 @@ public class GameManager : MonoBehaviour{
             PlayerPrefs.SetInt(highscoreKey, score);
             PlayerPrefs.Save();
         }
+        AudioManager.ins.playGameOverSFX();
         gameOverPanel.SetActive(true);
         gameOverScoreTMP.text = "Score : " + score;
         gameOverHSTMP.text = "Highscore : " + highscore;
         Time.timeScale = 0;
-        gameOverAudioSource.Play();
+        // gameOverAudioSource.Play();
     }
     public void pauseResumeGame(){
         isPause = !isPause;

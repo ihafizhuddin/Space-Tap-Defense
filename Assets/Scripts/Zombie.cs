@@ -7,7 +7,7 @@ public class Zombie : MonoBehaviour{
     public float speed;
     public Sprite[] image;
     SpriteRenderer rd;
-    AudioSource audioSource;
+    // AudioSource audioSource;
     BoxCollider2D cd;
     // Start is called before the first frame update
     void Start(){
@@ -15,7 +15,7 @@ public class Zombie : MonoBehaviour{
         rd = GetComponent<SpriteRenderer>();
         cd = GetComponent<BoxCollider2D>();
         rd.sprite = image[spriteIndex];
-        audioSource = GetComponent<AudioSource>();
+        // audioSource = GetComponent<AudioSource>();
         
     }
 
@@ -28,7 +28,8 @@ public class Zombie : MonoBehaviour{
     void OnMouseDown(){
         if(GameManager.get.isPause)return;
         GameManager.get.increaseScore();
-        audioSource.Play();
+        AudioManager.ins.playPlaneShooted();
+        // audioSource.Play();
         rd.enabled = false;
         cd.enabled = false;
         GameObject newExplosion = Instantiate(explosion, transform.position, transform.rotation);
