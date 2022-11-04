@@ -7,7 +7,6 @@ public class Zombie : MonoBehaviour{
     public float speed;
     public Sprite[] image;
     SpriteRenderer rd;
-    // AudioSource audioSource;
     BoxCollider2D cd;
     // Start is called before the first frame update
     void Start(){

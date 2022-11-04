@@ -10,8 +10,14 @@ public class GameManager : MonoBehaviour{
     private string highscoreKey = "highscore";
     public static GameManager get;
 
+    [Header("Mute Attributes")]
+    public bool isMuted;
+    public string isMuteKey = "IsMuted";
+
+
     [Header("Parameter HUD")]
     public int health = 3;
+    public int extraHealth = 0;
     public int score = 0;
     public int highscore = 0;
 
@@ -53,12 +59,22 @@ public class GameManager : MonoBehaviour{
     // Start is called before the first frame update
     void Start(){
         Time.timeScale = 0;
+        extraHealth = 0;
         mainMenuPanel.SetActive(true);
         gameOverPanel.SetActive(false);
         gameOverAudioSource = GetComponent<AudioSource>();
         isPause = false;
         highscore = PlayerPrefs.GetInt(highscoreKey, 0);
         mainMenuHSTMP.text = "Highscore : " + highscore;
+        int muteStatus = PlayerPrefs.GetInt(isMuteKey, 0);
+
+        if(muteStatus == 1){
+            isMuted = true;
+            AudioManager.ins.gameObject.SetActive(false);
+        }else{
+            isMuted = false;
+            AudioManager.ins.gameObject.SetActive(true);
+        }
 
     }
 
@@ -91,6 +107,7 @@ public class GameManager : MonoBehaviour{
     }
     public void increaseHealth(){
         health++;
+        extraHealth++;
     }
 
     public void restartGame(){
@@ -139,5 +156,16 @@ public class GameManager : MonoBehaviour{
     }
     public void exitGame(){
         Application.Quit();
+    }
+    public void setMuteSound(){
+        // if(isMute){
+            
+            isMuted = !isMuted;
+            Debug.Log("Is muted : " + isMuted);
+            AudioManager.ins.gameObject.SetActive(!isMuted);
+            int muteStatus = isMuted ? 1 : 0 ;
+            PlayerPrefs.SetInt(isMuteKey, muteStatus);
+            PlayerPrefs.Save();
+        // }
     }
 }
