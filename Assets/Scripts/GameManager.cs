@@ -82,7 +82,13 @@ public class GameManager : MonoBehaviour{
     public void increaseScore(){
         score++;
         scoreText.text = "Score : " + score;
+        if(score%20 == 0){
+            increaseHealth();
+        }
 
+    }
+    public void increaseHealth(){
+        health++;
     }
 
     public void restartGame(){
