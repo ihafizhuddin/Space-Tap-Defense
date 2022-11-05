@@ -27,7 +27,8 @@ public class Zombie : MonoBehaviour{
     void OnMouseDown(){
         if(GameManager.get.isPause)return;
         GameManager.get.increaseScore();
-        AudioManager.ins.playPlaneShooted();
+        // AudioManager.ins.playPlaneShooted();
+        AudioManager.ins.PlaySFX("alien_shooted");
         // audioSource.Play();
         rd.enabled = false;
         cd.enabled = false;

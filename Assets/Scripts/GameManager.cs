@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour{
     [Header("Parameter HUD")]
     public int health = 3;
     public int extraHealth = 0;
+    public UIContainerUIAnimator extraHealthPanelAnimator;
     public int score = 0;
     public int highscore = 0;
 
@@ -59,7 +60,7 @@ public class GameManager : MonoBehaviour{
     // Start is called before the first frame update
     void Start(){
         Time.timeScale = 0;
-        extraHealth = 0;
+        // extraHealth = 0;
         mainMenuPanel.SetActive(true);
         gameOverPanel.SetActive(false);
         gameOverAudioSource = GetComponent<AudioSource>();
@@ -75,6 +76,7 @@ public class GameManager : MonoBehaviour{
             isMuted = false;
             AudioManager.ins.gameObject.SetActive(true);
         }
+        
 
     }
 
@@ -87,7 +89,8 @@ public class GameManager : MonoBehaviour{
         //decrease health
         health--;
         // if(health>0)
-        AudioManager.ins.playAlienHitSFX();
+        AudioManager.ins.PlaySFX("alien_hit");
+        // AudioManager.ins.playAlienHitSFX();
         if(health <= 0){
             healthText.text = "Game Over";
             GameOver();
@@ -100,14 +103,18 @@ public class GameManager : MonoBehaviour{
     public void increaseScore(){
         score++;
         scoreText.text = "Score : " + score;
-        if(score%20 == 0){
+        if(score%10 == 0){
             increaseHealth();
         }
 
     }
     public void increaseHealth(){
         health++;
-        extraHealth++;
+        // extraHealth++;
+        extraHealthPanelAnimator.Show();
+        extraHealthPanelAnimator.Hide();
+        Debug.Log("Get Extra Life");
+        healthText.text = "Health : " + health;
     }
 
     public void restartGame(){
@@ -122,6 +129,7 @@ public class GameManager : MonoBehaviour{
         score = 0;
         scoreText.text = "Score : 0";
         highscore = PlayerPrefs.GetInt(highscoreKey, 0);
+        // increaseHealth();
 
     }
 
@@ -131,7 +139,8 @@ public class GameManager : MonoBehaviour{
             PlayerPrefs.SetInt(highscoreKey, score);
             PlayerPrefs.Save();
         }
-        AudioManager.ins.playGameOverSFX();
+        // AudioManager.ins.playGameOverSFX();
+        AudioManager.ins.PlaySFX("game_over");
         gameOverPanel.SetActive(true);
         gameOverScoreTMP.text = "Score : " + score;
         gameOverHSTMP.text = "Highscore : " + highscore;

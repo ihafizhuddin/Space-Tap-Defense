@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CursorManager : MonoBehaviour
-{
+public class CursorManager : MonoBehaviour{
     // You must set the cursor in the inspector.
   public Texture2D crosshair; 
 
@@ -14,7 +13,7 @@ public class CursorManager : MonoBehaviour
      
       //Sets the cursor to the Crosshair sprite with given offset 
       //and automatic switching to hardware default if necessary
-      // Cursor.SetCursor(crosshair, cursorOffset, CursorMode.Auto);
-      Cursor.SetCursor(crosshair, Vector2.zero, CursorMode.Auto);
+      Cursor.SetCursor(crosshair, cursorOffset, CursorMode.Auto);
+      // Cursor.SetCursor(crosshair, Vector2.zero, CursorMode.Auto);
   }
 }
